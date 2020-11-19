@@ -1,8 +1,7 @@
+"""Blueprint for the homescreen."""
 import flask
 
 
-main_bp = flask.Blueprint('main', __name__)
+main_bp = flask.Blueprint('main', __name__, template_folder="main_templates")
 
-@main_bp.route("/")
-def show_homepage():
-    return "Homepage from blueprint new"
+from . import routes
