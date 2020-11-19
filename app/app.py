@@ -15,3 +15,6 @@ app.register_blueprint(sports_bp)
 
 from weather import weather_bp
 app.register_blueprint(weather_bp)
+
+from account import account_bp
+app.register_blueprint(account_bp)
