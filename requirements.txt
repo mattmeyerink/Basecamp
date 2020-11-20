@@ -40,6 +40,8 @@ pycodestyle==2.6.0
 pycparser==2.20
 pydocstyle==5.1.1
 pylint==2.6.0
+pylint-flask==0.6
+pylint-plugin-utils==0.6
 pyOpenSSL==19.1.0
 pyparsing==2.4.7
 pytest==6.0.2
