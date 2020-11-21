@@ -1,0 +1,7 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <a class="btn btn-primary"
+        href="{{ url_for('authentication.google_login') }}" role="button">
+        Login with Google
+    </a>
+{% endblock content %}

@@ -2,6 +2,7 @@ import flask
 from flask_sqlalchemy import SQLAlchemy 
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from oauthlib.oauth2 import WebApplicationClient
 from config import Config
 
 # Create instances of db and db migration
@@ -11,6 +12,7 @@ migrate = Migrate()
 # Initialize settings for login
 login = LoginManager()
 login.login_view = 'authentication.login'
+client = WebApplicationClient(Config.GOOGLE_CLIENT_ID)
 
 def create_app():
     """Creates the flask application."""
@@ -26,7 +28,6 @@ def create_app():
 
     # Set up login infastructure
     login.init_app(app)
-    client = WebApplicationClient(GOOGLE_CLIENT_ID)
 
     # Pull in all of the blueprints 
     from blueprints.main import main_bp
