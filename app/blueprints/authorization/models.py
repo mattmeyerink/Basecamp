@@ -16,6 +16,13 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return f"<User: {self.id} | {self.email}>"
+    
+    def from_dict(self, data):
+        for field in ["email", "given_name"]:
+            if field in data:
+                setattr(self, field, data[field])
+    
+
             
 
 @login.user_loader
