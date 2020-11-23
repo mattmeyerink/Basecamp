@@ -9,6 +9,7 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(50))
     name = db.Column(db.String(100))
+    created_on = db.Column(db.DateTime, default=datetime.utcnow)
 
     def save(self):
         db.session.add(self)
@@ -18,7 +19,7 @@ class User(UserMixin, db.Model):
         return f"<User: {self.id} | {self.email}>"
     
     def from_dict(self, data):
-        for field in ["email", "given_name"]:
+        for field in ["email", "name"]:
             if field in data:
                 setattr(self, field, data[field])
 

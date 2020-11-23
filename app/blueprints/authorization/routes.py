@@ -1,5 +1,6 @@
 import flask
 import requests
+import json
 from flask_login import login_user, logout_user, current_user
 from . import auth_bp
 from app import client, Config
@@ -31,7 +32,7 @@ def google_login():
 def google_callback():
     """Callback for Google Authentication."""
     # Recieve google authorization code
-    code = request.args.get("code")
+    code = flask.request.args.get("code")
 
     # Find the URL to ask for the user info tokens
     google_provider_cfg = requests.get(Config.GOOGLE_DISCOVERY_URL).json()
@@ -40,7 +41,7 @@ def google_callback():
     # Prepare the request for tokens
     token_url, headers, body = client.prepare_token_request(
         token_endpoint,
-        authorization_response=request.url,
+        authorization_response=flask.request.url,
         redirect_url=flask.request.base_url,
         code=code
     )
@@ -54,7 +55,7 @@ def google_callback():
     )
 
     # Parse the recieved tokens
-    client.parse_request_body_response(json)
+    client.parse_request_body_response(json.dumps(token_response.json()))
     
     # Use tokens to find URL from Google that has profile information
     userinfo_endpoint = google_provider_cfg["userinfo_endpoint"]
@@ -73,10 +74,12 @@ def google_callback():
     user = User.query.filter_by(email=users_email).first()
 
     # If the users info was not already present in the local db add them.
-    if not user_present:
+    if not user:
         user = User()
-        user.from_dict({"email": users_email, "given_name": users_name})
+        user.from_dict({"email": users_email, "name": users_name})
+        user.save()
 
     login_user(user)
 
     return flask.redirect(flask.url_for("main.show_homepage"))
+
