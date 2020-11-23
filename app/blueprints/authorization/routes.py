@@ -3,7 +3,7 @@ import requests
 from flask_login import login_user, logout_user, current_user
 from . import auth_bp
 from app import client, Config
-from . import User
+from .models import User
 
 
 
@@ -22,10 +22,9 @@ def google_login():
     # Construct request for information from google login to callback function
     request_uri = client.prepare_request_uri(
         authorization_endpoint,
-        redirect_uri=request.base_url + "/callback",
+        redirect_uri=flask.request.base_url + "/callback",
         scope=["openid", "email", "profile"]
     )
-    
     return flask.redirect(request_uri)
 
 @auth_bp.route("/google-login/callback")
@@ -42,7 +41,7 @@ def google_callback():
     token_url, headers, body = client.prepare_token_request(
         token_endpoint,
         authorization_response=request.url,
-        redirect_url=request.base_url,
+        redirect_url=flask.request.base_url,
         code=code
     )
 
@@ -71,12 +70,13 @@ def google_callback():
         return "Failed to authenticate with Google"
                 
     # If the user is not already in our db, add them
-    user_present = User.query.filter_by(email=users_email).first()
+    user = User.query.filter_by(email=users_email).first()
 
-    # TODO check this logic. Make sure I'm not creating a new db entry each 
-    # time someone logs in. 
+    # If the users info was not already present in the local db add them.
     if not user_present:
         user = User()
         user.from_dict({"email": users_email, "given_name": users_name})
 
     login_user(user)
+
+    return flask.redirect(flask.url_for("main.show_homepage"))

@@ -21,9 +21,6 @@ class User(UserMixin, db.Model):
         for field in ["email", "given_name"]:
             if field in data:
                 setattr(self, field, data[field])
-    
-
-            
 
 @login.user_loader
 def load_user(id):
