@@ -1,3 +1,4 @@
+"""Blueprint for displaying sports pages. Uses the sportstradar API."""
 import flask
 
 

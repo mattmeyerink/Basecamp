@@ -1,3 +1,4 @@
+"""Initializes the Basecamp App."""
 import flask
 from flask_sqlalchemy import SQLAlchemy 
 from flask_migrate import Migrate
@@ -30,22 +31,22 @@ def create_app():
     login.init_app(app)
 
     # Pull in all of the blueprints 
-    from blueprints.main import main_bp
+    from .blueprints.main import main_bp
     app.register_blueprint(main_bp)
 
-    from blueprints.news import news_bp
+    from .blueprints.news import news_bp
     app.register_blueprint(news_bp)
 
-    from blueprints.sports import sports_bp
+    from .blueprints.sports import sports_bp
     app.register_blueprint(sports_bp)
 
-    from blueprints.weather import weather_bp
+    from .blueprints.weather import weather_bp
     app.register_blueprint(weather_bp)
 
-    from blueprints.account import account_bp
+    from .blueprints.account import account_bp
     app.register_blueprint(account_bp)
 
-    from blueprints.authorization import auth_bp
+    from .blueprints.authorization import auth_bp
     app.register_blueprint(auth_bp)
 
     # Create the db

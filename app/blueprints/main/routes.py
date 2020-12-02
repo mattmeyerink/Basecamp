@@ -1,3 +1,4 @@
+"""Routing for the homepage."""
 import flask
 import requests
 from flask_login import login_required
@@ -5,7 +6,6 @@ from . import main_bp
 
 
 @main_bp.route("/")
-@login_required
 def show_homepage():
     """Display route for the homepage."""
     # Gather quote data from quotes API
