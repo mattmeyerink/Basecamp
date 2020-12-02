@@ -17,5 +17,3 @@ class Config:
     GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID', None)
     GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET', None)
     GOOGLE_DISCOVERY_URL = 'https://accounts.google.com/.well-known/openid-configuration'
-
-    SPORTRADAR_API_KEY = os.getenv('SPORTRADAR_API_KEY')

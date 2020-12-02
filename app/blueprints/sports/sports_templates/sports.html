@@ -1,7 +1,47 @@
 {% extends 'layout.html' %}
 {% block content %}
-  
-  <h1>UNDER CONSTRUCTION</h1>
-  <h1>This will be the sports page</h1>
-    
+
+<div class="row justify-content-center">
+  <h2>College Basketball Scores</h2>
+</div>
+
+<div class="row justify-content-center">
+  {% for game in games %}
+  <div class="col-md-4 border border-dark score_card">
+    <div class="row">
+
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-3">
+            <img src="{{ game.home_team.logo }}" alt="Home Team Logo" class="img-fluid">
+          </div>
+          {% if game.home_team.rank <= 25 %}
+            <strong>{{ game.home_team.rank }} {{ game.home_team.short_name }}</strong>
+          {% else %}
+            <strong>{{ game.home_team.short_name }}</strong>
+          {% endif %}
+        </div>
+        
+        <div class="row">
+          <div class="col-md-3">
+            <img src="{{ game.away_team.logo }}" alt="Away Team Logo" class="img-fluid">
+          </div>
+          {% if game.away_team.rank <= 25 %}
+            <strong>{{ game.away_team.rank }} {{ game.away_team.short_name }}</strong>
+          {% else %}
+            <strong>{{ game.away_team.short_name }}</strong>
+          {% endif %}
+        </div>
+      </div>
+      
+      <div class="col-md-4" style="margin-top: 20px">
+        <p>{{ game.time }}</p>
+      </div>
+    </div>
+  </div>
+
+
+  {% endfor %}
+</div>
+
 {% endblock content %}
